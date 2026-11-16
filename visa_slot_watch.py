@@ -35,7 +35,7 @@ import urllib.request
 from html.parser import HTMLParser
 
 # ---------------- settings ----------------
-NTFY_TOPIC = os.environ.get("NTFY_TOPIC", "h1b-slots-bfba83541a")  # set as a GitHub secret
+NTFY_TOPIC = os.environ.get("NTFY_TOPIC") or "h1b-slots-bfba83541a"  # a GitHub secret overrides this
 URGENT_BEFORE = date(2026, 12, 20)          # slots on/before this = URGENT
 POLL_SECONDS = 120                          # check every 2 minutes
 VISA_TYPES = ("H-1B", "H1B")
