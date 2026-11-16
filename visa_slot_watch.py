@@ -48,7 +48,12 @@ CITY_PAGES = {
 }
 INDEX_PAGE = "https://visagrader.com/us-visa-time-slots-availability/india-ind"
 SEEN_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "seen_slots.json")
-HEADERS = {"User-Agent": "Mozilla/5.0 (personal slot watcher; low frequency)"}
+HEADERS = {
+    "User-Agent": ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
+                   "(KHTML, like Gecko) Chrome/131.0 Safari/537.36"),
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.9",
+}
 # ------------------------------------------
 
 
