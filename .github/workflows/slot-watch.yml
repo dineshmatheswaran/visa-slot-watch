@@ -1,0 +1,39 @@
+name: H-1B slot watch
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"   # every 5 minutes (GitHub may delay runs)
+  workflow_dispatch:         # lets you run it manually from the Actions tab
+
+permissions:
+  contents: write            # to save seen_slots.json (avoids duplicate alerts)
+
+concurrency:
+  group: slot-watch
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check public slot trackers
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: python visa_slot_watch.py --once
+
+      - name: Save seen slots
+        run: |
+          if [ -n "$(git status --porcelain seen_slots.json)" ]; then
+            git config user.name "slot-watch-bot"
+            git config user.email "actions@users.noreply.github.com"
+            git add seen_slots.json
+            git commit -m "update seen slots"
+            git push
+          fi
